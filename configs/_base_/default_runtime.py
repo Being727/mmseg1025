@@ -9,7 +9,7 @@ visualizer = dict(
     type='SegLocalVisualizer', vis_backends=vis_backends, name='visualizer')
 log_processor = dict(by_epoch=False)
 log_level = 'INFO'
-load_from = None
-resume = False
+load_from = '/home/niu/mmsegmentation/work_dirs/WHUDataset-unet/best_mIoU_iter_57000.pth'
+resume = True
 
 tta_model = dict(type='SegTTAModel')
