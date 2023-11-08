@@ -1,45 +1,22 @@
-# Copyright (c) OpenMMLab. All rights reserved.
-from argparse import ArgumentParser
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
 
-from mmengine.model import revert_sync_batchnorm
+import cv2
 
-from mmseg.apis import inference_model, init_model, show_result_pyplot
+img_path = "/home/niu/mmsegmentation/demo/global_monthly_2020_01_mosaic_L15-1439E-1134N_5759_3655_13_32.jpg"
+start_index = img_path.find("monthly_")  # 找到"monthly_"的起始位置
+end_index = img_path.find(".jpg")  # 找到".jpg"的位置
 
+if start_index != -1 and end_index != -1:
+    img_name = img_path[start_index + len("monthly_"):end_index]  # 提取"monthly"之后、".jpg"之前的字符
+    print(img_name)
+else:
+    print("未找到'monthly_'或'.jpg'")
+    
 
-def main():
-    parser = ArgumentParser()
-    parser.add_argument('img', help='Image file')
-    parser.add_argument('config', help='Config file')
-    parser.add_argument('checkpoint', help='Checkpoint file')
-    parser.add_argument('--out-file', default=None, help='Path to output file')
-    parser.add_argument(
-        '--device', default='cuda:0', help='Device used for inference')
-    parser.add_argument(
-        '--opacity',
-        type=float,
-        default=0.5,
-        help='Opacity of painted segmentation map. In (0, 1] range.')
-    parser.add_argument(
-        '--title', default='result', help='The image identifier.')
-    args = parser.parse_args()
+img_bgr = cv2.imread(img_path)
 
-    # build the model from a config file and a checkpoint file
-    model = init_model(args.config, args.checkpoint, device=args.device)
-    if args.device == 'cpu':
-        model = revert_sync_batchnorm(model)
-    # test a single image
-    result = inference_model(model, args.img)
-    # show the results
-    show_result_pyplot(
-        model,
-        args.img,
-        result,
-        title=args.title,
-        opacity=args.opacity,
-        draw_gt=False,
-        show=False if args.out_file is not None else True,
-        out_file=args.out_file)
-
-
-if __name__ == '__main__':
-    main()
+plt.figure(figsize=(8, 8))
+plt.imshow(img_bgr[:,:,::-1])
+plt.show()

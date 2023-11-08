@@ -1,18 +1,22 @@
-#修改配置文件cfg
+#修改配置文件cfg  
 #修改网络类型名称 net
 
 import datetime
 from mmengine import Config
 
-net='unet'
+net='DeepLabV3+'
 date = datetime.date.today()
 
 
 #cfg = Config.fromfile('/home/niu/mmsegmentation/configs/pspnet/pspnet_r50-d8_4xb4-80k_ade20k-512x512.py')
 #cfg = Config.fromfile('/home/niu/mmsegmentation/configs/ccnet/ccnet_r50-d8_4xb4-80k_ade20k-512x512.py')
 #cfg = Config.fromfile('/home/niu/mmsegmentation/configs/danet/danet_r50-d8_4xb4-80k_ade20k-512x512.py')
-cfg = Config.fromfile('/home/niu/mmsegmentation/configs/unet/unet-s5-d16_fcn_4xb4-160k_cityscapes-512x1024.py')
+#cfg = Config.fromfile('/home/niu/mmsegmentation/configs/unet/unet-s5-d16_fcn_4xb4-160k_cityscapes-512x1024.py')
 #cfg = Config.fromfile('/home/niu/mmsegmentation/configs/dmnet/dmnet_r50-d8_4xb4-80k_ade20k-512x512.py')
+#cfg = Config.fromfile("/home/niu/mmsegmentation/configs/fcn/fcn_r50-d8_4xb4-80k_ade20k-512x512.py")
+cfg = Config.fromfile("/home/niu/mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r101-d8_4xb4-80k_ade20k-512x512.py")
+
+
 dataset_cfg = Config.fromfile('./configs/_base_/datasets/WHUDataset_pipeline.py')
 
 
@@ -34,13 +38,13 @@ cfg.model.decode_head.num_classes = NUM_CLASS
 cfg.model.auxiliary_head.num_classes = NUM_CLASS
 
 # 训练 Batch Size
-cfg.train_dataloader.batch_size = 8
+cfg.train_dataloader.batch_size = 2
 
 # 结果保存目录
 cfg.work_dir = './work_dirs/WHUDataset-' + net
 
 # 模型保存与日志记录
-cfg.train_cfg.max_iters = 3000 # 训练迭代次数
+cfg.train_cfg.max_iters = 60000 # 训练迭代次数
 cfg.train_cfg.val_interval = 500 # 评估模型间隔
 cfg.default_hooks.logger.interval = 100 # 日志记录间隔
 cfg.default_hooks.checkpoint.interval = 1000 # 模型权重保存间隔

@@ -25,7 +25,7 @@ date = datetime.date.today().strftime('%Y-%m-%d')
 
 
 # 日志文件路径
-json_path = '/home/niu/mmsegmentation/work_dirs/WHUDataset-DeepLabV3plus/20231019_201203/vis_data/20231019_201203.json'
+json_path = "/home/niu/mmsegmentation/work_dirs/WHUDataset-hrnet/20231026_154830/vis_data/20231026_154830.json"
 #从日志文件中提取网络名称
 net_name = json_path.split('WHUDataset-')[1].split('/')[0]
 
@@ -209,8 +209,8 @@ def show_each_class():
 
 
 if __name__ == '__main__':
-    #show_train_loss()
-    #show_train_acc()
-    #show_test()
-    show_each_class()
+    show_train_loss()
+    show_train_acc()
+    show_test()
+    #show_each_class()
 
